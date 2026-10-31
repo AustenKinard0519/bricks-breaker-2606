@@ -84,6 +84,30 @@ void Game::Render() const
 		brick.Draw();
 	}
 
+	// Victory Message from Todo #6
+	if (won)
+	{
+		const std::string message = "You win! Press 'R' to play again.";
+		const int textX =
+			(WINDOW_WIDTH - static_cast<int>(message.length())) / 2;
+
+		Console::ForegroundColor(ConsoleColor::White);
+		Console::SetCursorPosition(textX, WINDOW_HEIGHT / 2);
+		std::cout << message;
+	}
+
+	//You lose message for Todo #7
+	if (lost)
+	{
+		const std::string message = "You lose. Press 'R' to play again.";
+		const int textX =
+			(WINDOW_WIDTH - static_cast<int>(message.length())) / 2;
+
+		Console::ForegroundColor(ConsoleColor::White);
+		Console::SetCursorPosition(textX, WINDOW_HEIGHT / 2);
+		std::cout << message;
+	}
+
 	Console::Lock(false);
 }
 
@@ -123,4 +147,9 @@ void Game::CheckCollision()
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+	if (ball.y_position >= WINDOW_HEIGHT - 1)
+	{
+		lost = true;
+		ball.moving = false;
+	}
 }
